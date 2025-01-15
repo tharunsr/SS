@@ -30,7 +30,7 @@ public class CustomerPrinciple implements UserDetails {
 
     @Override
     public String getUsername() {
-        return cust.getUserName();
+        return cust.getUsername();
     }
 
     @Override

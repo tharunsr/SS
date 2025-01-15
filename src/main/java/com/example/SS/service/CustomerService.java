@@ -6,6 +6,7 @@ import com.example.SS.repository.CustomerRepository;
 import com.example.SS.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,6 +18,8 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository repo;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Autowired
     ProductRepository proRepo;
@@ -30,6 +33,7 @@ public class CustomerService {
     }
 
     public void addCustomer(Customer customer) {
+       customer.setPassword(encoder.encode(customer.getPassword()));
             Set<Product> products = new HashSet<>();
             if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
                 for (Product product : customer.getProduct()) {
