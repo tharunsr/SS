@@ -15,7 +15,17 @@ public class CustomerController {
     @Autowired
     CustomerService service;
 
-    @GetMapping(" ")
+    @PostMapping("/register")
+    public void register(@RequestBody Customer customer){
+        service.register(customer);
+    }
+
+    @PostMapping("/login")
+    public String verify(@RequestBody Customer customer){
+        return service.verify(customer);
+    }
+
+    @GetMapping("")
     public String display(HttpServletRequest req){
         return "Welcome to Customers section " + req.getSession().getId();
     }
