@@ -64,20 +64,20 @@ public class CustomerService {
     }
 
     public void update(Customer customer) {
-            Set<Product> products = new HashSet<>();
-            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
-                for (Product product : customer.getProduct()) {
-                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
-                    if (existingProduct != null) {
-                        products.add(existingProduct);  // Add the existing product to the set
-                    } else {
-                        // Handle the case where the product is not found, could throw an exception or log the error
-                        System.out.println("Product with ID " + product.getId() + " not found.");
-                    }
-                }
-                // Set the fetched products for the customer
-                customer.setProduct(products);
-            }
+//            Set<Product> products = new HashSet<>();
+//            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
+//                for (Product product : customer.getProduct()) {
+//                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
+//                    if (existingProduct != null) {
+//                        products.add(existingProduct);  // Add the existing product to the set
+//                    } else {
+//                        // Handle the case where the product is not found, could throw an exception or log the error
+//                        System.out.println("Product with ID " + product.getId() + " not found.");
+//                    }
+//                }
+//                // Set the fetched products for the customer
+//                customer.setProduct(products);
+//            }
         repo.save(customer);
     }
 
