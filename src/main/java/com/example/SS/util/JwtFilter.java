@@ -1,7 +1,7 @@
 package com.example.SS.util;
 
-import com.example.SS.entities.CustomerPrinciple;
-import com.example.SS.service.CustomerServiceImpl;
+
+import com.example.SS.service.PersonServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication()==null){
-            UserDetails userDetails = context.getBean(CustomerServiceImpl.class).loadUserByUsername(username);
+            UserDetails userDetails = context.getBean(PersonServiceImpl.class).loadUserByUsername(username);
 
             if(jwtService.validateToken(token,userDetails)){
                 UsernamePasswordAuthenticationToken upat = new

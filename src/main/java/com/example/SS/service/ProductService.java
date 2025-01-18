@@ -25,11 +25,11 @@ public class ProductService {
         repo.save(prod);
     }
 
-    public void update(Product prod) {
+    public void updateProduct(Product prod) {
         repo.save(prod);
     }
 
-    public void deleteById(int id) {
+    public void deleteByProductId(int id) {
         repo.deleteById(id);
     }
 }

@@ -1,8 +1,8 @@
 package com.example.SS.service;
 
-import com.example.SS.entities.Customer;
-import com.example.SS.entities.CustomerPrinciple;
-import com.example.SS.repository.CustomerRepository;
+import com.example.SS.entities.PersonPrinciple;
+import com.example.SS.entities.Person;
+import com.example.SS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,17 +10,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerServiceImpl implements UserDetailsService {
+public class PersonServiceImpl implements UserDetailsService {
 
     @Autowired
-    private CustomerRepository repo;
+    private PersonRepository repo;
+
+    public PersonServiceImpl(PersonRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer cust = repo.findByUsername(username);
-        if(cust==null){
+        Person person = repo.findByUsername(username);
+        if(person==null){
             throw new UsernameNotFoundException("User Not Found");
         }
-        return new CustomerPrinciple(cust);
+        return new PersonPrinciple(person);
     }
 }

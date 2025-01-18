@@ -17,19 +17,19 @@ public class CategoryService {
         return repo.findAll();
     }
 
-    public Category getProductById(int id) {
+    public Category getCategoryById(int id) {
         return repo.findById(id).orElse(null);
     }
 
-    public void addProduct(Category prod) {
+    public void addCategory(Category prod) {
         repo.save(prod);
     }
 
-    public void update(Category prod) {
+    public void updateCategory(Category prod) {
         repo.save(prod);
     }
 
-    public void deleteById(int id) {
+    public void deleteByCategoryId(int id) {
         repo.deleteById(id);
     }
 }

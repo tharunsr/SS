@@ -26,7 +26,7 @@ public class CustomerService {
     @Autowired
     CustomerRepository repo;
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+//    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Autowired
     ProductRepository proRepo;
@@ -34,7 +34,7 @@ public class CustomerService {
     @Autowired
     AuthenticationManager manager;
 
-    public List<Customer> getAll() {
+    public List<Customer> getAllCustomer() {
         return repo.findAll();
     }
 
@@ -81,22 +81,25 @@ public class CustomerService {
         repo.save(customer);
     }
 
-    public void deleteById(int id) {
+    public void deleteByCustomerId(int id) {
         repo.deleteById(id);
     }
 
-    public void register(Customer customer) {
-        customer.setPassword(encoder.encode(customer.getPassword()));
-        repo.save(customer);
+//    public void register(Customer customer) {
+//        customer.setPassword(encoder.encode(customer.getPassword()));
+//        repo.save(customer);
+//    }
+//
+//    public String verify(Customer customer) {
+//        Authentication authentication = manager.authenticate
+//                (new UsernamePasswordAuthenticationToken(customer.getUsername(),customer.getPassword()));
+//        if(authentication.isAuthenticated()){
+//            return jwtservice.generateToken(customer.getUsername());
+//        }
+//        else{
+//            throw new RuntimeException("Invalid Username and Password");
+//        }
+
     }
 
-    public String verify(Customer customer) {
-        Authentication authentication = manager.authenticate
-                (new UsernamePasswordAuthenticationToken(customer.getUsername(),customer.getPassword()));
-        if(authentication.isAuthenticated()){
-            return jwtservice.generateToken(customer.getUsername());
-        }
-        return "Retry";
-    }
-}
 

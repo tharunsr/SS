@@ -7,30 +7,33 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-public class CustomerPrinciple implements UserDetails {
+public class PersonPrinciple implements UserDetails {
 
     @Autowired
-    Customer cust;
+    private Person person;
 
-    public CustomerPrinciple(Customer cust) {
-        this.cust = cust;
+    public PersonPrinciple(Person person) {
+        this.person = person;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        if (person.getRole().equals("ADMIN")) {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        }
     }
 
     @Override
     public String getPassword() {
-        return cust.getPassword();
+        return person.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return cust.getUsername();
+        return person.getUsername();
     }
 
     @Override

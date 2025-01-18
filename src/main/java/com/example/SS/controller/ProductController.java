@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cosmetics/product")
+@RequestMapping("/api")
 public class ProductController {
 
     @Autowired
-    ProductService service;
+    private ProductService service;
 
-    @GetMapping(" ")
-    public String display(HttpServletRequest req){
-        return "Welcome to Cosmetics " + req.getSession().getId();
-    }
+//    @GetMapping(" ")
+//    public String display(HttpServletRequest req){
+//        return "Welcome to Cosmetics " + req.getSession().getId();
+//    }
 
     @GetMapping("/products")
     public List<Product> getAll(){
@@ -30,20 +30,20 @@ public class ProductController {
         return service.getProductById(id);
     }
 
-    @PostMapping("/products")
-    public void addProduct(@RequestBody Product prod){
-        service.addProduct(prod);
-    }
-
-    @PutMapping("/products")
-    public void update(@RequestBody Product prod){
-        service.update(prod);
-    }
-
-    @DeleteMapping("/products/{id}")
-    public void deleteById(@PathVariable int id){
-        service.deleteById(id);
-    }
+//    @PostMapping("/products")
+//    public void addProduct(@RequestBody Product prod){
+//        service.addProduct(prod);
+//    }
+//
+//    @PutMapping("/products")
+//    public void updateProduct(@RequestBody Product prod){
+//        service.updateProduct(prod);
+//    }
+//
+//    @DeleteMapping("/products/{id}")
+//    public void deleteByProductId(@PathVariable int id){
+//        service.deleteByProductId(id);
+//    }
 
 
 

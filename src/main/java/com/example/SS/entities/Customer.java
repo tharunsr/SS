@@ -12,11 +12,12 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String password;
-    private String username;
+
+    private String name;
     private String email;
     private long phone_num;
     private String address;
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -24,14 +25,7 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     Set<Product> product = new HashSet<>();
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    
 
     public Set<Product> getProduct() {
         return product;
@@ -49,12 +43,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

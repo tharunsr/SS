@@ -28,23 +28,21 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(customizer -> customizer.disable());
-       http.authorizeHttpRequests(request ->
-               request
-                       .requestMatchers("cosmetics/customer/login","cosmetics/customer/register").permitAll()
-                       .anyRequest().authenticated());
-//       http.formLogin(Customizer.withDefaults());
+        http.authorizeHttpRequests(request ->
+                        request
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated());
+      // http.formLogin(Customizer.withDefaults());
        http.httpBasic(Customizer.withDefaults());
+       http.cors(Customizer.withDefaults());
        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
        return http.build();
-
 
     }
 
