@@ -19,7 +19,7 @@ public class Customer {
     private String address;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "customer_products",
             joinColumns = @JoinColumn(name = "customer_id"),
