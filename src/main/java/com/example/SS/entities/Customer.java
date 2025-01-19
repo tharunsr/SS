@@ -19,9 +19,9 @@ public class Customer {
     private String address;
 
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "customer_products",
+            name = "cart",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     Set<Product> product = new HashSet<>();
