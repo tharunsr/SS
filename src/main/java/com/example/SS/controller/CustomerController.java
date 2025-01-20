@@ -4,6 +4,8 @@ import com.example.SS.entities.Customer;
 import com.example.SS.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,15 +38,25 @@ public class CustomerController {
 //    }
 
     @PostMapping("/customers")
-    public void addProduct(@RequestBody Customer prod){
-        service.addCustomer(prod);
+    public ResponseEntity<String> addCustomer(@RequestBody Customer prod){
+        try{
+            service.addCustomer(prod);
+          return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer added Successfully!");
+        } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Product Id present on that table");
+        }
     }
 
     @PutMapping("/customers")
-    public void update(@RequestBody Customer prod){
-        service.update(prod);
+    public ResponseEntity<String> updateCustomer(@RequestBody Customer prod){
+        try{
+            service.update(prod);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer updated Successfully!");
+        }   catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Product Id present on that table");
+        }
     }
-//
+
 //    @DeleteMapping("/customers/{id}")
 //    public void deleteById(@PathVariable int id){
 //        service.deleteById(id);

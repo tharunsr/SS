@@ -1,6 +1,7 @@
 package com.example.SS.service;
 
 import com.example.SS.entities.Category;
+import com.example.SS.exception.InvalidCategoryException;
 import com.example.SS.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,17 @@ public class CategoryService {
     }
 
     public void addCategory(Category prod) {
+        if(prod.getName().length() < 2){
+            throw new InvalidCategoryException("Name should be greater than 3 letters, Yours is : " + prod.getName());
+        }
         repo.save(prod);
     }
 
     public void updateCategory(Category prod) {
+        if(prod.getName().length() < 2){
+            throw new InvalidCategoryException("Name should be greater than 3 letters, Yours is : " + prod.getName());
+        }
+
         repo.save(prod);
     }
 
