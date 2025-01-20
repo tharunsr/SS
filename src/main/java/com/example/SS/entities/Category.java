@@ -12,7 +12,7 @@ public class Category {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE)
     List<Product> product;
 
     public int getId() {

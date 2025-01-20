@@ -102,7 +102,7 @@ public class AdminController {
 
 
     }
-
+//   ----------------------------------CUSTOMER
     @GetMapping("/customers")
     public List<Customer> getAllCustomer() {
         return custService.getAllCustomer();

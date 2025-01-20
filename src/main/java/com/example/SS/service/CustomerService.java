@@ -2,6 +2,7 @@ package com.example.SS.service;
 
 import com.example.SS.entities.Customer;
 import com.example.SS.entities.Product;
+import com.example.SS.exception.ProductNotFoundException;
 import com.example.SS.repository.CustomerRepository;
 import com.example.SS.repository.ProductRepository;
 import com.example.SS.util.JWTService;
@@ -46,38 +47,37 @@ public class CustomerService {
 
 //       customer.setPassword(encoder.encode(customer.getPassword()));
 
-//            Set<Product> products = new HashSet<>();
-//            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
-//                for (Product product : customer.getProduct()) {
-//                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
-//                    if (existingProduct != null) {
-//                        products.add(existingProduct);  // Add the existing product to the set
-//                    } else {
-//                        // Handle the case where the product is not found, could throw an exception or log the error
-//                        System.out.println("Product with ID " + product.getId() + " not found.");
-//                    }
-//                }
-//
-//                customer.setProduct(products);
-//            }
+            Set<Product> products = new HashSet<>();
+            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
+                for (Product product : customer.getProduct()) {
+                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
+                    if (existingProduct != null) {
+                        products.add(existingProduct);  // Add the existing product to the set
+                    } else {
+                        throw new ProductNotFoundException("Product with ID " + product.getId() + " not found.");
+                    }
+                }
+
+                customer.setProduct(products);
+            }
         repo.save(customer);
     }
 
     public void update(Customer customer) {
-//            Set<Product> products = new HashSet<>();
-//            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
-//                for (Product product : customer.getProduct()) {
-//                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
-//                    if (existingProduct != null) {
-//                        products.add(existingProduct);  // Add the existing product to the set
-//                    } else {
-//                        // Handle the case where the product is not found, could throw an exception or log the error
-//                        System.out.println("Product with ID " + product.getId() + " not found.");
-//                    }
-//                }
-//                // Set the fetched products for the customer
-//                customer.setProduct(products);
-//            }
+            Set<Product> products = new HashSet<>();
+            if (customer.getProduct() != null && !customer.getProduct().isEmpty()) {
+                for (Product product : customer.getProduct()) {
+                    Product existingProduct = proRepo.findById(product.getId()).orElse(null);
+                    if (existingProduct != null) {
+                        products.add(existingProduct);  // Add the existing product to the set
+                    } else {
+                        // Handle the case where the product is not found, could throw an exception or log the error
+                        System.out.println("Product with ID " + product.getId() + " not found.");
+                    }
+                }
+                // Set the fetched products for the customer
+                customer.setProduct(products);
+            }
         repo.save(customer);
     }
 
