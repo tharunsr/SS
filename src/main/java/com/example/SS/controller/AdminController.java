@@ -1,5 +1,7 @@
 package com.example.SS.controller;
 
+
+import com.example.SS.dto.CategoryDto;
 import com.example.SS.entities.Category;
 import com.example.SS.entities.Customer;
 import com.example.SS.entities.Product;
@@ -7,6 +9,7 @@ import com.example.SS.exception.InvalidCategoryException;
 import com.example.SS.service.CategoryService;
 import com.example.SS.service.CustomerService;
 import com.example.SS.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private CategoryService catService;
@@ -30,20 +36,22 @@ public class AdminController {
 //    -------------------------------CATEGORY
 
     @PostMapping("/categories")
-    public ResponseEntity<Object> addCategory(@RequestBody Category cat) {
+    public ResponseEntity<String> addCategory(@RequestBody CategoryDto catDto) {
         try {
+            Category cat =  modelMapper.map(catDto,Category.class);
             catService.addCategory(cat);
             return ResponseEntity.status(HttpStatus.CREATED).body("Category added successfully!");
         } catch (InvalidCategoryException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Check Database");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Database or enter details");
         }
     }
 
     @PutMapping("/categories")
-    public ResponseEntity<String> updateCategory(@RequestBody Category cat) {
+    public ResponseEntity<String> updateCategory(@RequestBody CategoryDto catDto) {
         try {
+            Category cat =  modelMapper.map(catDto,Category.class);
             catService.updateCategory(cat);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Category updated successfully!");
         }
@@ -51,7 +59,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Check Database");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Database or enter details");
         }
 
     }
@@ -62,7 +70,7 @@ public class AdminController {
             catService.deleteByCategoryId(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Category deleted successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Caution! PK is used");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Caution! PK is used");
         }
 
 
@@ -75,7 +83,7 @@ public class AdminController {
             proService.addProduct(prod);
             return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Is either Category id correct or present");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Is either Category id correct or present");
         }
 
     }
@@ -86,7 +94,7 @@ public class AdminController {
             proService.updateProduct(prod);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Product updated successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Is either Category id correct or present");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Is either Category id correct or present");
         }
 
     }
@@ -97,7 +105,7 @@ public class AdminController {
             proService.deleteByProductId(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Product Deleted successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Caution! PK is used");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Caution! PK is used");
         }
 
 
@@ -119,7 +127,7 @@ public class AdminController {
             custService.deleteByCustomerId(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer deleted successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Id not exist!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id not exist!");
         }
     }
 }

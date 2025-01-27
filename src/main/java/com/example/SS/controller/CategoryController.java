@@ -1,7 +1,9 @@
 package com.example.SS.controller;
 
+import com.example.SS.dto.CategoryDto;
 import com.example.SS.entities.Category;
 import com.example.SS.service.CategoryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,37 +14,24 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService service;
+    private ModelMapper modelmapper;
 
-//    @GetMapping(" ")
-//    public String display(){
-//        return "Welcome to Category Section";
-//    }
+    @Autowired
+    private CategoryService service;
 
     @GetMapping("/categories")
-    public List<Category> getAll(){
-        return service.getAll() ;
+    public List<CategoryDto> getAll(){
+        List<Category> category = service.getAll();
+        return category.stream()
+                .map(cat -> modelmapper.map(cat,CategoryDto.class))
+                .toList();
     }
 
     @GetMapping("/categories/{id}")
-    public Category getCategoryById(@PathVariable int id){
-        return service.getCategoryById(id);
+    public CategoryDto getCategoryById(@PathVariable int id){
+        Category cat = service.getCategoryById(id);
+        return modelmapper.map(cat,CategoryDto.class);
     }
-
-//    @PostMapping("/categories")
-//    public void addProduct(@RequestBody Category prod){
-//        service.addProduct(prod);
-//    }
-//
-//    @PutMapping("/categories")
-//    public void update(@RequestBody Category prod){
-//        service.update(prod);
-//    }
-//
-//    @DeleteMapping("/categories/{id}")
-//    public void deleteById(@PathVariable int id){
-//        service.deleteById(id);
-//    }
 
 
 }

@@ -17,26 +17,6 @@ public class CustomerController {
     @Autowired
     private CustomerService service;
 
-//    @PostMapping("/register")
-//    public void register(@RequestBody Customer customer){
-//        service.register(customer);
-//    }
-//
-//    @PostMapping("/login")
-//    public String verify(@RequestBody Customer customer){
-//        return service.verify(customer);
-//    }
-//
-//    @GetMapping("/customers")
-//    public List<Customer> getAll(){
-//        return service.getAll() ;
-//    }
-//
-//    @GetMapping("/customers/{id}")
-//    public Customer getProductById(@PathVariable int id){
-//        return service.getCustomerById(id);
-//    }
-
     @PostMapping("/customers")
     public ResponseEntity<String> addCustomer(@RequestBody Customer prod){
         try{

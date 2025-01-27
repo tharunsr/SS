@@ -1,10 +1,8 @@
 package com.example.SS.service;
 
-import com.example.SS.entities.Customer;
+
 import com.example.SS.entities.Person;
-import com.example.SS.repository.CustomerRepository;
 import com.example.SS.repository.PersonRepository;
-import com.example.SS.repository.ProductRepository;
 import com.example.SS.util.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
