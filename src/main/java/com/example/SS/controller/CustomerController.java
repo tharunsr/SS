@@ -1,8 +1,10 @@
 package com.example.SS.controller;
 
+import com.example.SS.dto.CustomerDto;
 import com.example.SS.entities.Customer;
 import com.example.SS.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,14 @@ public class CustomerController {
     @Autowired
     private CustomerService service;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping("/customers")
-    public ResponseEntity<String> addCustomer(@RequestBody Customer prod){
+    public ResponseEntity<String> addCustomer(@RequestBody CustomerDto prod){
         try{
-            service.addCustomer(prod);
+            Customer customer = modelMapper.map(prod,Customer.class);
+            service.addCustomer(customer);
           return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer added Successfully!");
         } catch (Exception e) {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Product Id present on that table");
@@ -28,9 +34,10 @@ public class CustomerController {
     }
 
     @PutMapping("/customers")
-    public ResponseEntity<String> updateCustomer(@RequestBody Customer prod){
+    public ResponseEntity<String> updateCustomer(@RequestBody CustomerDto prod){
         try{
-            service.update(prod);
+            Customer customer = modelMapper.map(prod,Customer.class);
+            service.update(customer);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer updated Successfully!");
         }   catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check Product Id present on that table");

@@ -2,6 +2,8 @@ package com.example.SS.controller;
 
 
 import com.example.SS.dto.CategoryDto;
+import com.example.SS.dto.CustomerDto;
+import com.example.SS.dto.ProductDto;
 import com.example.SS.entities.Category;
 import com.example.SS.entities.Customer;
 import com.example.SS.entities.Product;
@@ -78,9 +80,10 @@ public class AdminController {
 
     //    ------------------------------- PRODUCT
     @PostMapping("/products")
-    public ResponseEntity<String> addProduct(@RequestBody Product prod) {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDto prod) {
         try {
-            proService.addProduct(prod);
+            Product product = modelMapper.map(prod,Product.class);
+            proService.addProduct(product);
             return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Is either Category id correct or present");
@@ -89,9 +92,10 @@ public class AdminController {
     }
 
     @PutMapping("/products")
-    public ResponseEntity<String> updateProduct(@RequestBody Product prod) {
+    public ResponseEntity<String> updateProduct(@RequestBody ProductDto prod) {
         try {
-            proService.updateProduct(prod);
+            Product product = modelMapper.map(prod,Product.class);
+            proService.updateProduct(product);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Product updated successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Is either Category id correct or present");
@@ -112,13 +116,17 @@ public class AdminController {
     }
 //   ----------------------------------CUSTOMER
     @GetMapping("/customers")
-    public List<Customer> getAllCustomer() {
-        return custService.getAllCustomer();
+    public List<CustomerDto> getAllCustomer() {
+        List<Customer> customer = custService.getAllCustomer();
+        return customer.stream()
+                .map(cust -> modelMapper.map(cust,CustomerDto.class))
+                .toList();
     }
 
     @GetMapping("/customers/{id}")
-    public Customer getCustomerById(@PathVariable int id) {
-        return custService.getCustomerById(id);
+    public CustomerDto getCustomerById(@PathVariable int id) {
+        Customer customer = custService.getCustomerById(id);
+        return modelMapper.map(customer, CustomerDto.class);
     }
 
     @DeleteMapping("/customers/{id}")

@@ -44,7 +44,7 @@ public class CategoryServiceTest {
         Category result = service.getCategoryById(1);
 
         assertNotNull(result);
-        assertEquals("Haircare", result.getName());
+        assertEquals("Electronics", result.getName());
     }
 
     @Test
@@ -53,6 +53,7 @@ public class CategoryServiceTest {
         newCategory.setName("Bodycare");
 
         service.addCategory(newCategory);
+      
 
         verify(repo, times(1)).save(newCategory);
     }

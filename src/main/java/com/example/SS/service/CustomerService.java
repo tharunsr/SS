@@ -6,12 +6,8 @@ import com.example.SS.exception.ProductNotFoundException;
 import com.example.SS.repository.CustomerRepository;
 import com.example.SS.repository.ProductRepository;
 import com.example.SS.util.JWTService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
