@@ -28,17 +28,15 @@ public class JWTService {
     }
 
 
-    public String generateToken(String username) {
+    public String generateToken(String email) {
 
         Map<String,Object> claims = new HashMap<>();
-
+        claims.put("email",email);
+        System.out.println("EmailGot:"+email);
         return Jwts.builder()
-                .claims()
-                .add(claims)
-                .subject(username)
+                .setClaims(claims)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 60*60*30*1000))
-                .and()
                 .signWith(getkey())
                 .compact();
 
@@ -50,10 +48,6 @@ public class JWTService {
         return Keys.hmacShaKeyFor(ans);
     }
 
-    public String extractUserName(String token) {
-        // extract the username from jwt token
-        return extractClaim(token, Claims::getSubject);
-    }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
@@ -69,8 +63,8 @@ public class JWTService {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String userEmail = extractEmail(token);
+        return (userEmail.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
@@ -81,4 +75,7 @@ public class JWTService {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    public String extractEmail(String token) {
+    return extractClaim(token,claims -> claims.get("email",String.class));
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.SS.controller;
 
-import com.example.SS.entities.Customer;
 import com.example.SS.entities.Person;
 import com.example.SS.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;

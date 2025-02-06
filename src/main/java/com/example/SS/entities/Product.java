@@ -21,7 +21,7 @@ public class Product {
     private Category category ;
 
     @ManyToMany(mappedBy = "product")
-    Set<Customer> customer = new HashSet<>();
+    Set<Person> customer = new HashSet<>();
 
 //    public Set<Customer> getCustomer() {
 //        return customer;

@@ -33,7 +33,7 @@ public class PersonPrinciple implements UserDetails {
 
     @Override
     public String getUsername() {
-        return person.getUsername();
+        return person.getEmail();
     }
 
     @Override

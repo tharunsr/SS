@@ -2,14 +2,11 @@ package com.example.SS.controller;
 
 
 import com.example.SS.dto.CategoryDto;
-import com.example.SS.dto.CustomerDto;
 import com.example.SS.dto.ProductDto;
 import com.example.SS.entities.Category;
-import com.example.SS.entities.Customer;
 import com.example.SS.entities.Product;
 import com.example.SS.exception.InvalidCategoryException;
 import com.example.SS.service.CategoryService;
-import com.example.SS.service.CustomerService;
 import com.example.SS.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +29,6 @@ public class AdminController {
     @Autowired
     private ProductService proService;
 
-    @Autowired
-    private CustomerService custService;
 
 //    -------------------------------CATEGORY
 
@@ -115,27 +110,6 @@ public class AdminController {
 
     }
 //   ----------------------------------CUSTOMER
-    @GetMapping("/customers")
-    public List<CustomerDto> getAllCustomer() {
-        List<Customer> customer = custService.getAllCustomer();
-        return customer.stream()
-                .map(cust -> modelMapper.map(cust,CustomerDto.class))
-                .toList();
-    }
 
-    @GetMapping("/customers/{id}")
-    public CustomerDto getCustomerById(@PathVariable int id) {
-        Customer customer = custService.getCustomerById(id);
-        return modelMapper.map(customer, CustomerDto.class);
-    }
 
-    @DeleteMapping("/customers/{id}")
-    public ResponseEntity<String> deleteByCustomerId(@PathVariable int id) {
-        try {
-            custService.deleteByCustomerId(id);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Customer deleted successfully!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id not exist!");
-        }
-    }
 }

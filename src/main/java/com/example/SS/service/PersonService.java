@@ -32,9 +32,9 @@ public class PersonService {
 
     public String verify(Person person) {
         Authentication authentication = manager.authenticate
-                (new UsernamePasswordAuthenticationToken(person.getUsername(),person.getPassword()));
+                (new UsernamePasswordAuthenticationToken(person.getEmail(),person.getPassword()));
         if(authentication.isAuthenticated()){
-            return jwtservice.generateToken(person.getUsername());
+            return jwtservice.generateToken(person.getEmail());
         }
         else{
             throw new RuntimeException("Invalid Username and Password");

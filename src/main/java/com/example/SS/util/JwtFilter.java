@@ -29,15 +29,19 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         String token = null;
-        String username = null;
+        String email = null;
 
+        System.out.println("Reached \n"+authHeader);
         if(authHeader!= null && authHeader.startsWith("Bearer ")){
             token = authHeader.substring(7);
-            username = jwtService.extractUserName(token);
+           //  jwtService.extractBegin(token);
+             email=jwtService.extractEmail(token);
+
+            System.out.println("Extraction Done:\n"+email);
         }
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication()==null){
-            UserDetails userDetails = context.getBean(PersonServiceImpl.class).loadUserByUsername(username);
+        if(email != null && SecurityContextHolder.getContext().getAuthentication()==null){
+            UserDetails userDetails = context.getBean(PersonServiceImpl.class).loadUserByUsername(email);
 
             if(jwtService.validateToken(token,userDetails)){
                 UsernamePasswordAuthenticationToken upat = new

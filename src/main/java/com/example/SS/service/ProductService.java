@@ -48,4 +48,7 @@ public class ProductService {
     }
 
 
+    public List<Product> getByName(String name) {
+        return repo.findByName(name);
+    }
 }

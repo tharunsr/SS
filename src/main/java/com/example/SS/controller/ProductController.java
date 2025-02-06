@@ -25,9 +25,12 @@ public class ProductController {
 //        return "Welcome to Cosmetics " + req.getSession().getId();
 //    }
 
+
     @GetMapping("/products")
-    public List<ProductDto> getAll(){
-        List<Product> products = service.getAll();
+    public List<ProductDto> sortProducts(@RequestParam(required = false) String name){
+        List<Product> products = (name !=null && !name.isEmpty())?
+                service.getByName(name)
+                :service.getAll() ;
         return products.stream()
                 .map(prod -> modelMapper.map(prod,ProductDto.class))
                 .toList();

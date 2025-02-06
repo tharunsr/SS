@@ -20,11 +20,12 @@ public class PersonServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Person person = repo.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Person person = repo.findByEmail(email);
         if(person==null){
             throw new UsernameNotFoundException("User Not Found");
         }
         return new PersonPrinciple(person);
     }
+
 }
